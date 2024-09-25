@@ -4,10 +4,12 @@ import { Route, Routes } from 'react-router-dom'
 import PrivateRoutes from './pages/PrivateRoutes'
 import Dashboard from './components/Dashboard'
 import Home from './components/Home'
+import Account from './components/Account'
 
 const App = () => {
   return (
     <div>
+      <Account/>
        <Routes>
        <Route element={<PrivateRoutes />}>
        <Route path='/' element={<Dashboard />} />
