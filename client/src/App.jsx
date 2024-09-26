@@ -3,23 +3,23 @@ import { Layout } from './components/layout'
 import { Route, Routes } from 'react-router-dom'
 import PrivateRoutes from './pages/PrivateRoutes'
 import Dashboard from './components/Dashboard'
-import Home from './components/Home'
 import Account from './components/Account'
+import Customers from './components/Customers'
+import Peoples from './components/People'
 
-const App = () => {
-  return (
-    <div>
-      <Account/>
-       <Routes>
-       <Route element={<PrivateRoutes />}>
-       <Route path='/' element={<Dashboard />} />
-       <Route path='/home' element={<Home />} />
-      
-       </Route>
+const App = () => (
+  <div>
+    <Account />
+    <Routes>
+      <Route element={<PrivateRoutes />}>
+        <Route path='/' element={<Dashboard />} />
+        <Route path='/customers' element={<Customers />} />
+        <Route path='/peoples' element={<Peoples />} />
 
-       </Routes>
-    </div>
-  )
-}
+      </Route>
+
+    </Routes>
+  </div>
+)
 
 export default App

@@ -3,7 +3,7 @@ import React from "react";
 const SmallCards = ({ name, tcolor }) => {
   return (
     <>
-      <div className="w-[270px] h-[120px] rounded-lg border-gray-100 shadow-md bg-primary2">
+      <div className="sm:w-[270px] w-full sm:h-[120px] h-auto  rounded-lg border-gray-100 shadow-md bg-primary2">
         <div className="w-full h-16 flex justify-center items-center border-b border-gray-100">
           <h2 className="text-xl font-sans font-semibold text-gray-700">
             {" "}

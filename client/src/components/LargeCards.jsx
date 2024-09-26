@@ -4,7 +4,7 @@ import { Progress } from "@/components/ui/progress"
 
 const LargeCards = () => {
   return (
-    <div className='w-[880px] h-auto lg:h-[400px] rounded-md shadow-md bg-primary2 flex justify-around'>
+    <div className='lg:w-[880px] w-auto h-auto  lg:h-[400px]  rounded-md shadow-md bg-primary2 flex flex-wrap justify-around'>
 
         <div className='w-[260px] h-auto  px-4 py-6'>
             <div>
