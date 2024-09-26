@@ -107,8 +107,8 @@ export function Layout({children}) {
                   href="#"
                   className="flex items-center gap-2 text-lg font-semibold"
                 >
-                  <Package2 className="h-6 w-6" />
-                  <span className="sr-only">Acme Inc</span>
+          <IoLogoMicrosoft  className="h-6 w-6" />            
+       <span className="">CRM</span>
                 </Link>
                 <Link
                   to={"/"}
@@ -170,7 +170,7 @@ export function Layout({children}) {
          
          
         </header>
-        <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
+        <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 bg-primary1">
           {children}
         </main>
       </div>
