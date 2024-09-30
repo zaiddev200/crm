@@ -15,7 +15,7 @@ const Dashboard = () => {
     </div>
     <div className='w-full h-auto flex flex-wrap lg:gap-0 gap-4 justify-around'>
       <LargeCards/>
-      <CustomerCards percentage={0} activeCustomerPercentage={0.00}/>
+      <CustomerCards percentage={30} activeCustomerPercentage={30.00}/>
     </div>
    </div>
   )

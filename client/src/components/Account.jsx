@@ -18,7 +18,7 @@ import { Button } from "@/components/ui/button"
 
 const Account = () => {
   return (
-    <div className="absolute top-4 right-4">
+    <div className="absolute z-40 top-4 right-4">
          
     <DropdownMenu >
             <DropdownMenuTrigger asChild>

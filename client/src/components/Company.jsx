@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { CustomerSideBar } from "./CustomerSideBar";
+import { CompaniesSideBar } from "./CompaniesSideBar";
 
 const people = [
   {
@@ -69,7 +70,7 @@ const invoices = [
   },
 ];
 
-export function Customers() {
+export function Company() {
   return (
     <div className="w-full p-6">
       {/* Header: Title, Search, Refresh, and Add Button */}
@@ -78,12 +79,12 @@ export function Customers() {
         <div className="flex justify-between flex-wrap mb-4 w-full">
           <div className="flex items-center gap-2">
             <IoMdArrowRoundBack className="h-5 w-5 hover:text-blue-500" />
-            <h2 className="text-xl font-semibold">Client List</h2>
+            <h2 className="text-xl font-semibold">Company List</h2>
           </div>
           <div className="flex gap-2">
             <Input placeholder="Search" />
             <Button variant="secondary">Refresh</Button>
-            <CustomerSideBar />
+            <CompaniesSideBar />
           </div>
         </div>
 
