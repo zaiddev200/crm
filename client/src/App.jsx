@@ -4,9 +4,9 @@ import { Route, Routes } from 'react-router-dom'
 import PrivateRoutes from './pages/PrivateRoutes'
 import Dashboard from './components/Dashboard'
 import Account from './components/Account'
-import Company from './components/Company'
 import { Customers } from './components/Customers'
 import { Peoples } from './components/People'
+import { Company } from './components/Company'
 
 const App = () => (
   <div>
