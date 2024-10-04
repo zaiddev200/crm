@@ -6,8 +6,9 @@ const getPeople = async (req, res ) => {
     try {
       const People = await people.find();
       res.status(200).json({
-        message: "Todo fetched successfully",
+        message: "people fetched successfully",
         data: People,
+        
       });
     } catch (error) {
         console.log(error);
@@ -27,8 +28,8 @@ const getPeople = async (req, res ) => {
         email,
       });
       res.json(200).json({
-        message: "Todo created successfully",
-        data: Todo,
+        message: "people created successfully",
+        data: people,
       });
     } catch (error) {
         console.log(error);
@@ -40,7 +41,7 @@ const getPeople = async (req, res ) => {
     try {
       const { firstname, lastname, company, country, phone ,email } = req.body;
       const peopleId = req.params.id;
-      const updatedPeople = await todo.findByIdAndUpdate(
+      const updatedPeople = await people.findByIdAndUpdate(
         { _id: peopleId },
         {
             firstname,
@@ -54,7 +55,7 @@ const getPeople = async (req, res ) => {
       );
       res.status(201).json({
         message: "People updated successfully",
-        data: updatePeople,
+        data: updatedPeople,
       });
     } catch (error) {
         console.log(error);
@@ -65,7 +66,7 @@ const getPeople = async (req, res ) => {
   const deletePeople = async (req, res) => {
     try {
       const peopleId = req.params.id;
-      await people.findByIdAndDelete(todoId);
+      await people.findByIdAndDelete(peopleId);
       res.status(200).json({
         message: "People deleted successfully",
       });

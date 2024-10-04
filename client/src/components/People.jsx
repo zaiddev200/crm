@@ -1,118 +1,83 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useContext } from "react";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { PeopleSideBar } from "./PeopleSideBar";
-
-const people = [
-  {
-    firstname: "Zaid",
-    lastname: "Rauf",
-    company: "",
-    country: "Pakistan",
-    phone: "93493289389e",
-    email: "zaidrauf005@gmail.com",
-  },
-];
-const invoices = [
-  {
-    invoice: "INV001",
-    paymentStatus: "Paid",
-    totalAmount: "$250.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV002",
-    paymentStatus: "Pending",
-    totalAmount: "$150.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV003",
-    paymentStatus: "Unpaid",
-    totalAmount: "$350.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV004",
-    paymentStatus: "Paid",
-    totalAmount: "$450.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV005",
-    paymentStatus: "Paid",
-    totalAmount: "$550.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV006",
-    paymentStatus: "Pending",
-    totalAmount: "$200.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV007",
-    paymentStatus: "Unpaid",
-    totalAmount: "$300.00",
-    paymentMethod: "Credit Card",
-  },
-];
+import { Context } from "@/context/Context";
+import { FiInbox } from "react-icons/fi";
 
 export function Peoples() {
+  const { people, handleSearchChange , searchTerm, filteredPeople } = useContext(Context);
+  console.log("hello" , people);
+
+ 
+  
+  // Fetch people data when component mounts
+
+
   return (
     <div className="w-full p-6">
       {/* Header: Title, Search, Refresh, and Add Button */}
       <div className="w-full h-20"></div>
-      <div className="flex flex-col justify-between w-full h-[400px]  rounded-md shadow-md bg-primary2 p-10 items-center mb-4">
+      <div className="flex flex-col justify-between w-full h-auto rounded-md shadow-md bg-primary2 p-10 items-center mb-4">
         <div className="flex justify-between flex-wrap mb-4 w-full">
           <div className="flex items-center gap-2">
             <IoMdArrowRoundBack className="h-5 w-5 hover:text-blue-500" />
             <h2 className="text-xl font-semibold">Client List</h2>
           </div>
           <div className="flex gap-2">
-            <Input placeholder="Search" />
+            <Input value={searchTerm} // Bind input value to searchTerm
+              onChange={handleSearchChange} placeholder="Search" />
             <Button variant="secondary">Refresh</Button>
             <PeopleSideBar />
           </div>
         </div>
 
         {/* Table with horizontal scroll */}
-        <div className="w-full overflow-auto  rounded-md scroll-smooth">
-          <Table className="">
-            <TableHeader>
-              <TableRow className="bg-gray-200 ">
-                <TableHead className="">Firstname</TableHead>
-                <TableHead className="">Lastname</TableHead>
-                <TableHead className="">Company</TableHead>
-                <TableHead className="">Phone</TableHead>
-                <TableHead className="">Email</TableHead>
-                <TableHead className=""></TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {invoices.map((invoice) => (
-                <TableRow key={invoice.invoice}>
-                  <TableCell className="font-medium">{invoice.invoice}</TableCell>
-                  <TableCell>{invoice.paymentStatus}</TableCell>
-                  <TableCell>{invoice.paymentMethod}</TableCell>
-                  <TableCell>{invoice.totalAmount}</TableCell>
-                  <TableCell>{invoice.totalAmount}</TableCell>
-                  <TableCell><Button className="bg-transparent border-2 border-transparent text-black hover:bg-transparent hover:border-gray-500 hover:border-2">...</Button></TableCell>
+        <div className="w-full overflow-auto rounded-md scroll-smooth">
+          {filteredPeople.length > 0 ? (
+            <Table className="">
+              <TableHeader>
+                <TableRow className="bg-gray-200">
+                  <TableHead>Firstname</TableHead>
+                  <TableHead>Lastname</TableHead>
+                  <TableHead>Company</TableHead>
+                  <TableHead>Phone</TableHead>
+                  <TableHead>Email</TableHead>
+                  <TableHead></TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {filteredPeople.map((val, index) => (
+                  <TableRow key={index}>
+                    <TableCell className="font-medium">{val.firstname}</TableCell>
+                    <TableCell>{val.lastname}</TableCell>
+                    <TableCell>{val.company}</TableCell>
+                    <TableCell>{val.country}</TableCell>
+                    <TableCell>{val.phone}</TableCell>
+                    <TableCell>{val.email}</TableCell>
+                    <TableCell>
+                      <Button className="bg-transparent border-2 border-transparent text-black hover:bg-transparent hover:border-gray-500 hover:border-2">
+                        ...
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          ) : (
+            <div className=" flex flex-col items-center justify-center mt-12  text-gray-600">
+            <FiInbox className="h-10 w-10"/>
+            <span>No data found</span></div>
+          )}
         </div>
       </div>
     </div>

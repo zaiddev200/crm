@@ -23,7 +23,7 @@ const peopleSchema = mongoose.Schema({
         unique: true
     },
     phone:{
-        type: String,
+        type: Number,
         required: true,
         unique: true
     }

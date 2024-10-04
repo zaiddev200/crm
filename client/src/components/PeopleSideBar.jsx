@@ -11,60 +11,84 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import { Context } from "@/context/Context"
+import { useContext } from "react"
 
  
 export function PeopleSideBar() {
+  const {handleChange , formData, handleSubmit} = useContext(Context)
+
+
   return (
-    <Sheet >
+    <Sheet>
       <SheetTrigger asChild>
-        <Button >Add New Person</Button>
+        <Button>Add New Person</Button>
       </SheetTrigger>
       <SheetContent className="overflow-auto">
         <SheetHeader>
-          <SheetTitle className="uppercase ">Add New Person</SheetTitle>
-         
+          <SheetTitle className="uppercase">Add New Person</SheetTitle>
         </SheetHeader>
-        <div className="grid gap-8 py-6 ">
+        <div className="grid gap-8 py-6">
           <div className="flex flex-col items-start gap-4">
-            <Label htmlFor="name" >
-              Firstname
-            </Label>
-            <Input id="name"  className="col-span-3" />
+            <Label htmlFor="firstname">Firstname</Label>
+            <Input
+              id="firstname"
+              value={formData.firstname}
+              onChange={handleChange}
+              className="col-span-3"
+            />
           </div>
           <div className="flex flex-col items-start gap-4">
-            <Label htmlFor="username" >
-              Lastname
-            </Label>
-            <Input id="Lastname" className="col-span-3" />
+            <Label htmlFor="lastname">Lastname</Label>
+            <Input
+              id="lastname"
+              value={formData.lastname}
+              onChange={handleChange}
+              className="col-span-3"
+            />
           </div>
           <div className="flex flex-col items-start gap-4">
-            <Label htmlFor="company" >
-              Company
-            </Label>
-            <Input id="company" className="col-span-3" />
+            <Label htmlFor="company">Company</Label>
+            <Input
+              id="company"
+              value={formData.company}
+              onChange={handleChange}
+              className="col-span-3"
+            />
           </div>
           <div className="flex flex-col items-start gap-4">
-            <Label htmlFor="country" >
-              Country
-            </Label>
-            <Input id="country" className="col-span-3" />
+            <Label htmlFor="country">Country</Label>
+            <Input
+              id="country"
+              value={formData.country}
+              onChange={handleChange}
+              className="col-span-3"
+            />
           </div>
           <div className="flex flex-col items-start gap-4">
-            <Label htmlFor="phone" >
-              Phone
-            </Label>
-            <Input id="phone" className="col-span-3" />
+            <Label htmlFor="phone">Phone</Label>
+            <Input
+              id="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              className="col-span-3"
+            />
           </div>
           <div className="flex flex-col items-start gap-4">
-            <Label htmlFor="email" >
-              Email
-            </Label>
-            <Input id="email" className="col-span-3" />
+            <Label htmlFor="email">Email</Label>
+            <Input
+              id="email"
+              value={formData.email}
+              onChange={handleChange}
+              className="col-span-3"
+            />
           </div>
         </div>
         <SheetFooter>
           <SheetClose asChild>
-            <Button type="submit">Save changes</Button>
+            <Button type="button" onClick={handleSubmit}>
+              Save changes
+            </Button>
           </SheetClose>
         </SheetFooter>
       </SheetContent>
