@@ -62,6 +62,17 @@ const getPeople = async (req, res ) => {
         
     }
   };
+ const getSinglePeople = async (req, res) => {
+    try {
+        const result = await people.findById(req.params.id)
+        if (!result) {
+            return res.status(404).json({ message: 'People not found' })
+        }
+        res.json(result)
+    } catch (err) {
+        res.status(500).json({ message: err.message })
+    }
+}
   
   const deletePeople = async (req, res) => {
     try {
@@ -76,4 +87,4 @@ const getPeople = async (req, res ) => {
     }
   };
   
-  export { getPeople, createPeople, updatePeople, deletePeople};
+  export { getPeople, createPeople, updatePeople, getSinglePeople, deletePeople};

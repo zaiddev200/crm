@@ -11,7 +11,7 @@ const peopleSchema = mongoose.Schema({
     },
     company:{
         type: String,
-        required: true
+        // required: true
     },
     country:{
         type: String,

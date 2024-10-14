@@ -7,6 +7,7 @@ import Account from './components/Account'
 import { Customers } from './components/Customers'
 import { Peoples } from './components/People'
 import { Company } from './components/Company'
+import { Leads } from './components/Leads'
 
 const App = () => (
   <div>
@@ -17,6 +18,7 @@ const App = () => (
         <Route path='/customers' element={<Customers />} />
         <Route path='/peoples' element={<Peoples />} />
         <Route path='/companies' element={<Company />} />
+        <Route path='/leads' element={<Leads />} />
 
       </Route>
 

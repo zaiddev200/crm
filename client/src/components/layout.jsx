@@ -23,10 +23,10 @@ export function Layout({ children }) {
     <div className="grid min-h-screen relative  w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
       <div className="hidden border-r bg-muted/40 md:block ">
         <div className="flex h-full max-h-screen flex-col gap-2 shadow-xl bg-black1 z-30 text-white">
-          <div className="absolute w-[260px] h-[260px]  bg-gradient-to-r from-secondary1 to-black1 blur-2xl top-[-40px] left-[-40px] rounded-full opacity-55  z-0"></div>
+          {/* <div className="absolute w-[260px] h-[260px]  bg-gradient-to-r from-secondary1 to-black1 blur-2xl top-[-40px] left-[-40px] rounded-full opacity-40  z-0"></div> */}
           <div className="flex h-14 items-center justify-center text-white my-10 z-30 px-4 lg:h-[60px] lg:px-6">
             <NavLink to="/" className="flex items-center gap-2 font-semibold">
-              <IoLogoMicrosoft className="h-6 w-6" />
+              {/* <IoLogoMicrosoft className="h-6 w-6" /> */}
               <span className="sofadi-one-regular">CRM</span>
             </NavLink>
           </div>
@@ -39,8 +39,8 @@ export function Layout({ children }) {
                 to="/"
                 className={({ isActive }) =>
                   isActive
-                    ? "flex items-center gap-3 pl-1 py-2 rounded-tl-lg rounded-bl-lg text-secondary1 bg-secondary2"
-                    : "flex items-center gap-3 pl-1 py-2 rounded-tl-lg rounded-bl-lg text-white hover:bg-[#9393934a]"
+                    ? "flex items-center gap-3 pl-3 py-2 rounded-tl-lg rounded-bl-lg text-secondary1  bg-gradient-to-r from-secondary2 via-secondary2 to-black1"
+                    : "flex items-center gap-3 pl-3 py-2 rounded-tl-lg rounded-bl-lg text-white hover:bg-[#9393934a]"
                 }
               >
                 <Home className="h-4 w-4" />
@@ -50,8 +50,8 @@ export function Layout({ children }) {
                 to="/customers"
                 className={({ isActive }) =>
                   isActive
-                    ? "flex items-center gap-3 pl-1 py-2 rounded-tl-lg rounded-bl-lg text-secondary1 bg-secondary2"
-                    : "flex items-center gap-3 pl-1 py-2 rounded-tl-lg rounded-bl-lg text-white hover:bg-[#9393934a]"
+                    ? "flex items-center gap-3 pl-3 py-2 rounded-tl-lg rounded-bl-lg text-secondary1 bg-gradient-to-r from-secondary2 via-secondary2 to-black1"
+                    : "flex items-center gap-3 pl-3 py-2 rounded-tl-lg rounded-bl-lg text-white hover:bg-[#9393934a]"
                 }
               >
                 <MdOutlineHeadset className="h-4 w-4" />
@@ -61,8 +61,8 @@ export function Layout({ children }) {
                 to="/peoples"
                 className={({ isActive }) =>
                   isActive
-                   ? "flex items-center gap-3 pl-1 py-2 rounded-tl-lg rounded-bl-lg text-secondary1 bg-secondary2"
-                    : "flex items-center gap-3 pl-1 py-2 rounded-tl-lg rounded-bl-lg text-white hover:bg-[#9393934a]"
+                   ? "flex items-center gap-3 pl-3 py-2 rounded-tl-lg rounded-bl-lg text-secondary1 bg-gradient-to-r from-secondary2 via-secondary2 to-black1"
+                    : "flex items-center gap-3 pl-3 py-2 rounded-tl-lg rounded-bl-lg text-white hover:bg-[#9393934a]"
                 }
               >
                 <LuUser2 className="h-4 w-4" />
@@ -72,23 +72,23 @@ export function Layout({ children }) {
                 to="/companies"
                 className={({ isActive }) =>
                   isActive
-                     ? "flex items-center gap-3 pl-1 py-2 rounded-tl-lg rounded-bl-lg text-secondary1 bg-secondary2"
-                    : "flex items-center gap-3 pl-1 py-2 rounded-tl-lg rounded-bl-lg text-white hover:bg-[#9393934a]"
+                     ? "flex items-center gap-3 pl-3 py-2 rounded-tl-lg rounded-bl-lg text-secondary1 bg-gradient-to-r from-secondary2 via-secondary2 to-black1"
+                    : "flex items-center gap-3 pl-3 py-2 rounded-tl-lg rounded-bl-lg text-white hover:bg-[#9393934a]"
                 }
               >
                 <HiOutlineBuildingStorefront className="h-4 w-4" />
                 Companies
               </NavLink>
               <NavLink
-                to="/analytics"
+                to="/leads"
                 className={({ isActive }) =>
                   isActive
-                     ? "flex items-center gap-3 pl-1 py-2 rounded-tl-lg rounded-bl-lg text-secondary1 bg-secondary2"
-                    : "flex items-center gap-3 pl-1 py-2 rounded-tl-lg rounded-bl-lg text-white hover:bg-[#9393934a]"
+                     ? "flex items-center gap-3 pl-3 py-2 rounded-tl-lg rounded-bl-lg text-secondary1 bg-gradient-to-r from-secondary2 via-secondary2 to-black1"
+                    : "flex items-center gap-3 pl-3 py-2 rounded-tl-lg rounded-bl-lg text-white hover:bg-[#9393934a]"
                 }
               >
                 <LineChart className="h-4 w-4" />
-                Analytics
+                Leads
               </NavLink>
             </nav>
           </div>
@@ -117,8 +117,8 @@ export function Layout({ children }) {
                   to="/"
                   className={({ isActive }) =>
                     isActive
-                       ? "flex items-center gap-3 pl-1 py-2 rounded-tl-lg rounded-bl-lg text-secondary1 bg-secondary2"
-                    : "flex items-center gap-3 pl-1 py-2 rounded-tl-lg rounded-bl-lg text-white hover:bg-[#9393934a]"
+                       ? "flex items-center gap-3 pl-3 py-2 rounded-tl-lg rounded-bl-lg text-secondary1 bg-gradient-to-r from-secondary2 to-black1  bg-secondary2"
+                    : "flex items-center gap-3 pl-3 py-2 rounded-tl-lg rounded-bl-lg text-white hover:bg-[#9393934a]"
                   }
                 >
                   <Home className="h-5 w-5" />
@@ -128,8 +128,8 @@ export function Layout({ children }) {
                   to="/orders"
                   className={({ isActive }) =>
                     isActive
-                       ? "flex items-center gap-3 pl-1 py-2 rounded-tl-lg rounded-bl-lg text-secondary1 bg-secondary2"
-                    : "flex items-center gap-3 pl-1 py-2 rounded-tl-lg rounded-bl-lg text-white hover:bg-[#9393934a]"
+                       ? "flex items-center gap-3 pl-3 py-2 rounded-tl-lg rounded-bl-lg text-secondary1 bg-gradient-to-r from-secondary2 via-secondary2 to-black1"
+                    : "flex items-center gap-3 pl-3 py-2 rounded-tl-lg rounded-bl-lg text-white hover:bg-[#9393934a]"
                   }
                 >
                   <ShoppingCart className="h-5 w-5" />
@@ -143,7 +143,7 @@ export function Layout({ children }) {
             </SheetContent>
           </Sheet>
         </header>
-        <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6 bg-primary1">
+        <main className="flex flex-3 flex-col gap-4 p-4 lg:gap-6 lg:p-6 bg-primary1">
           {children}
         </main>
       </div>
