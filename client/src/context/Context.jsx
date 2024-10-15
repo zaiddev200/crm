@@ -5,322 +5,297 @@ import { createContext, useEffect, useState } from "react";
 export const Context = createContext();
 
 const ContextProvider = (props) => {
-  const [people, setPeople] = useState([])
-  const [company, setCompany] = useState([])
-  const [countryData, setCountryData] = useState([])
+  // State Variables
+  const [people, setPeople] = useState([]);
+  const [company, setCompany] = useState([]);
+  const [companyData, setCompanyData] = useState([]);
+  const [countryData, setCountryData] = useState([]);
+  const [customerData, setCustomerData] = useState([]);
+  const [singlepeopleId, setSinglePeopleId] = useState("");
+  const [singleCompany, setSingleCompany] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchCompany, setSearchCompany] = useState("");
+  const [leadData, setLeadData] = useState([]);
 
-
-  const [values, setValues] = useState({ type: "", people: "", company: "", });
-
-  // console.log(people, filteredCompany);
-  
-  // Function to post customer data to the API
-  const postCustomer = async () => {
+  // -------------------------
+  //  People Logic
+  // -------------------------
+  const getPeople = async () => {
     try {
-      const customerData = {
-        type: values.type,
-        people: values.type === "people" ? values.people : undefined,
-        company: values.type === "company" ? values.company : undefined,
-      };
-  
-      const response = await axios.post("http://localhost:1337/api/customerform/customer", customerData);
-      console.log("customer", response.data);
+      const response = await axios.get("http://localhost:1337/api/form/people");
+      console.log("Fetched people data:", response.data);
+      setPeople(response.data.data);
     } catch (error) {
-      console.error("Error creating customer:", error);
+      console.error("Error fetching people data:", error);
     }
   };
 
-  const [customerData, setCustomerData] = useState([])
-  const getCustomer = async () => {
+  const postPeople = async (values) => {
     try {
-      const response = await axios.get("http://localhost:1337/api/customerform/customer");
+      await axios.post("http://localhost:1337/api/form/people", values);
+      console.log("Person added successfully");
+      getPeople();
+    } catch (error) {
+      console.error("Error posting person data:", error);
+    }
+  };
+
+  const deletePeople = async (id) => {
+    try {
+      await axios.delete(`http://localhost:1337/api/form/people/${id}`);
+      setPeople((prev) => prev.filter((person) => person._id !== id));
+      console.log(`Person with ID ${id} deleted successfully`);
+    } catch (error) {
+      console.error(`Error deleting person with ID ${id}:`, error);
+    }
+  };
+
+  const getSinglePeople = async (person) => {
+    try {
+      const { data } = await axios.get(
+        `http://localhost:1337/api/form/singlepeople/${person._id}`
+      );
+      console.log("People fetch successfully", data);
+      <PeopleSideBar />;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value.toLowerCase());
+  };
+
+  const filteredPeople = people.filter((person) =>
+    [person.firstname, person.lastname, person.email, person.company]
+      .filter(Boolean)
+      .some((field) => field.toLowerCase().includes(searchTerm))
+  );
+
+  useEffect(() => {
+    getPeople();
+  }, []);
+
+  // -------------------------
+  //  Company Logic
+  // -------------------------
+  const getCompany = async () => {
+    try {
+      const response = await axios.get("http://localhost:1337/api/companyform/company");
       console.log("Fetched company data:", response.data);
-      
-      setCustomerData(response.data.data);
-      // Assuming you want to save the data to a local state (e.g., setCompanies)
+      setCompanyData(response.data.data);
     } catch (error) {
       console.error("Error fetching company data:", error);
     }
   };
-  
-  // Fetch companies on component mount
+
+  const postCompany = async (values) => {
+    try {
+      await axios.post("http://localhost:1337/api/companyform/company", values);
+      console.log("Company added successfully");
+      getCompany();
+    } catch (error) {
+      console.error("Error posting company data:", error);
+    }
+  };
+
+  const deleteCompany = async (id) => {
+    try {
+      await axios.delete(`http://localhost:1337/api/companyform/company/${id}`);
+      setCompanyData((prev) => prev.filter((company) => company._id !== id));
+      console.log(`Company with ID ${id} deleted successfully`);
+    } catch (error) {
+      console.error(`Error deleting company with ID ${id}:`, error);
+    }
+  };
+
+  const handleSearchCompanyChange = (e) => {
+    setSearchCompany(e.target.value.toLowerCase());
+  };
+
+  const filteredCompany = companyData.filter((company) =>
+    [company.name, company.contact, company.email, company.company]
+      .filter(Boolean)
+      .some((field) => field.toLowerCase().includes(searchCompany))
+  );
+
+  useEffect(() => {
+    getCompany();
+  }, []);
+
+  // -------------------------
+  //  Customer Logic
+  // -------------------------
+  const getCustomer = async () => {
+    try {
+      const response = await axios.get("http://localhost:1337/api/customerform/customer");
+      console.log("Fetched customer data:", response.data);
+      setCustomerData(response.data.data);
+    } catch (error) {
+      console.error("Error fetching customer data:", error);
+    }
+  };
+
+  const deleteCustomer = async (id) => {
+    try {
+      await axios.delete(`http://localhost:1337/api/customerform/customer/${id}`);
+      setCustomerData((prev) => prev.filter((customer) => customer._id !== id));
+      console.log(`Customer with ID ${id} deleted successfully`);
+    } catch (error) {
+      console.error(`Error deleting customer with ID ${id}:`, error);
+    }
+  };
+
+  const storeSingleCustomerCompany = async () => {
+    try {
+      console.log("Fetching data for company ID:", singleCompany);
+
+      const { data } = await axios.get(
+        `http://localhost:1337/api/companyform/singlecompany/${singleCompany}`
+      );
+
+      if (!data) {
+        console.log("No data found for this company.");
+        return;
+      }
+
+      const postData = {
+        name: data.name,
+        country: data.country,
+        phone: data.phone,
+        email: data.email,
+        type: "company",
+      };
+
+      await axios.post("http://localhost:1337/api/customerform/customer", postData);
+      console.log("Data sent successfully");
+    } catch (error) {
+      console.error("Error fetching company data:", error);
+    }
+  };
+
+  const storeSingleCustomerPeople = async () => {
+    try {
+      console.log("Fetching data for ID:", singlepeopleId);
+
+      const { data } = await axios.get(
+        `http://localhost:1337/api/form/singlepeople/${singlepeopleId}`
+      );
+
+      if (!data) {
+        console.log("No data found for this ID.");
+        return;
+      }
+
+      const postData = {
+        name: `${data.firstname} ${data.lastname}`,
+        country: data.country,
+        phone: data.phone,
+        email: data.email,
+        type: "people",
+      };
+
+      await axios.post("http://localhost:1337/api/customerform/customer", postData);
+      console.log("Data sent successfully");
+    } catch (error) {
+      console.error("Error occurred:", error);
+    }
+  };
+
   useEffect(() => {
     getCustomer();
   }, []);
 
-  // Handle form submission
-  const handleCustomerSubmit = (e) => {
-    e.preventDefault(); // Prevent default form behavior
-    setValues({
-      type: "",
-      people: "",
-      company: "",
-      
-    })
-    postCustomer(); // Post the customer data
-    console.log("success", e.data);
-    
-  };
-
-  // Handle changes in form fields
-  const handleCustomerChanges = (e) => {
-    const { id, value } = e.target;
-    setValues({
-      ...values,
-      [id]: value,
-    });
-  };
-
-  const countries = async () =>{
+  // -------------------------
+  //  Country Logic
+  // -------------------------
+  const fetchCountries = async () => {
     try {
       const response = await axios.get("https://restcountries.com/v3.1/all");
       setCountryData(response.data);
     } catch (error) {
       console.error("Error fetching countries:", error);
     }
-  }
-  
-  useEffect(() =>{
-    countries()
-  } , [])
-  
-  // Assuming this is within your Context or component
-  // const [companyFormData, setCompanyFormData] = useState({
-  //   name: "",
-  //   contact: "",
-  //   country: "",
-  //   phone: "",
-  //   email: "",
-  //   website: "",
-  // });
-  
-  // Handle input changes
-  // const handleCompanyChange = (e) => {
-  //   const { id, value } = e.target;
-  //   setCompanyFormData({
-  //     ...companyFormData,
-  //     [id]: value,
-  //   });
-  // };
-  
-  // Post data to API (Create a new company)
-  const postCompany = async (values) => {
-    try {
-      await axios.post("http://localhost:1337/api/companyform/company", values );
-      console.log("Company added successfully");
-      getCompany()
-    } catch (error) {
-      console.error("Error posting company data:", error);
-    }
   };
-  
-  // Handle form submission
-  // const handleCompanySubmit = (e) => {
-  //   e.preventDefault();
-  //   console.log("Form Data Submitted: ", companyFormData);
-  
-  //   // Clear form data after submission
-   
-  
-  //   // Submit the data to the server
-  //   postCompany();
-  // };
-  
-  // Fetch existing company data
-  const getCompany = async () => {
-    try {
-      const response = await axios.get("http://localhost:1337/api/companyform/company");
-      console.log("Fetched company data:", response.data);
-      
-      setCompanyData(response.data.data);
-      // Assuming you want to save the data to a local state (e.g., setCompanies)
-    } catch (error) {
-      console.error("Error fetching company data:", error);
-    }
-  };
-  
-  // Fetch companies on component mount
+
   useEffect(() => {
-    getCompany();
-  }, []); // Empty dependency array ensures this only runs once on mount
-  
-  const [companyData, setCompanyData] =useState([])
-
-  const deleteCompany = async (id) => {
-    try {
-      await axios.delete(`http://localhost:1337/api/companyform/company/${id}`);
-      // Filter out the deleted person from the state
-      setCompanyData(filteredCompany.filter(company => company._id !== id));
-      console.log(`Company with ID ${id} deleted successfully`);
-    } catch (error) {
-      console.error(`Error deleting company with ID ${id}:`, error);
-    }
-
-    
-  };
-  const [searchCompany, setSearchCompany, ] = useState("")
-
-  const handleSearchCompanyChange = (e) => {
-    setSearchCompany(e.target.value.toLowerCase()); // Convert input to lowercase for case-insensitive search
-  };
-
-  const filteredCompany = companyData.filter((company) =>
-    company.name.toLowerCase().includes(searchCompany) ||
-    company.contact.toLowerCase().includes(searchCompany) ||
-    company.email.toLowerCase().includes(searchCompany) ||
-    company.company?.toLowerCase().includes(searchCompany) // Optional chaining in case company is undefined
-  );
-
-
-
-
-
-  const postPeople = async (values) => {
-    try {
-      await axios.post("http://localhost:1337/api/form/people", values);
-      getPeople()
-      console.log("Person added successfully");
-    } catch (error) {
-      console.error("Error posting person data:", error);
-    }
-  };
-  
-  
-  const getPeople = async () => {
-    try {
-      const response = await axios.get("http://localhost:1337/api/form/people");
-      console.log("Fetched people data:", response.data);
-      setPeople(response.data.data)
-      // You can set the fetched data into a state here if needed
-      // Example: setPeople(response.data);
-    } 
-    
-    catch (error) {
-      console.error("Error fetching people data:", error);
-    }
-  };
-  useEffect(() => {
-    getPeople();
+    fetchCountries();
   }, []);
 
-  const deletePeople = async (id) => {
+    // -------------------------
+  //  Leads Logic
+  // -------------------------
+
+  const getLead = async () => {
     try {
-      await axios.delete(`http://localhost:1337/api/form/people/${id}`);
-      // Filter out the deleted person from the state
-      setPeople(filteredPeople.filter(person => person._id !== id));
-      console.log(`Person with ID ${id} deleted successfully`);
+      const response = await axios.get("http://localhost:1337/api/leadform/lead");
+      console.log("Fetched Lead data:", response.data);
+      setLeadData(response.data.data);
     } catch (error) {
-      console.error(`Error deleting person with ID ${id}:`, error);
-    }
-};
-  const [searchTerm, setSearchTerm] = useState("")
-
-  const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value.toLowerCase()); // Convert input to lowercase for case-insensitive search
-  };
-
-  const filteredPeople = people.filter((person) =>
-    person.firstname.toLowerCase().includes(searchTerm) ||
-    person.lastname.toLowerCase().includes(searchTerm) ||
-    person.email.toLowerCase().includes(searchTerm) ||
-    person.company?.toLowerCase().includes(searchTerm) // Optional chaining in case company is undefined
-  );
-
-  const getSinglePeople = async (people) => {
-    try {
-      const { data } = await axios.get(
-       `http://localhost:1337/api/form/singlepeople/${people._id}`
-      );
-      // setFormData({
-      //   firstname: data.firstname,
-      //   lastname:  data.lastname,
-      //   company:  data.company,
-      //   country:  data.country,
-      //   phone:  data.phone,
-      //   email:  data.email ,
-      // }); 
-
-      <PeopleSideBar/>
-      
-      console.log("People fetch sucessfully", data);
-    } catch (error) {
-      console.log(error);
+      console.error("Error fetching Lead data:", error);
     }
   };
 
+  const postLead = async (values) => {
+    try {
+      await axios.post("http://localhost:1337/api/leadform/lead", values);
+      console.log("Lead added successfully");
+    } catch (error) {
+      console.error("Error posting lead data:", error);
+    }
+  };
+
+  const deleteLead = async (id) => {
+    try {
+      await axios.delete(`http://localhost:1337/api/leadform/lead/${id}`);
+      setLeadData((prev) => prev.filter((lead) => lead._id !== id));
+      console.log(`Lead with ID ${id} deleted successfully`);
+    } catch (error) {
+      console.error(`Error deleting Lead with ID ${id}:`, error);
+    }
+  };
+
+  useEffect(() => {
+    getLead();
+  }, []);
 
 
-  // const updateCompany = async () => {
-  //   try {
-  //     const result = await axios.put(
-  //       http://localhost:1337/api/form/update-company/${cmpUpdateId},
-  //       {
-  //         name: name,
-  //         contact: contact,
-  //         website: website,
-  //         country: cmpCountry,
-  //         phone: cmpPhone,
-  //         email: cmpEmail,
-  //       }
-  //     );
-  //     console.log("Succesfully Updated Company");
-  //     setCmpShowButton(!cmpShowButton);
-  //     setOpenCompanyForm(!openCompanyForm);
-  //     setName("");
-  //     setContact("");
-  //     setWebsite("");
-  //     setCmpCountry("");
-  //     setCmpPhone("");
-  //     setCmpEmail("");
-  //     getCompany();
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-
-  
-
-  
-
-  // Context value that will be passed to children
+  // -------------------------
+  //  Context Value
+  // -------------------------
   const contextValue = {
-    // Customer
-    setValues,
-    values,
-    postCustomer,
-    handleCustomerSubmit,
-    handleCustomerChanges,
-    getCustomer,
-    customerData,
-
-    // people
-    // formData,
+    // People
     people,
-    // handleChange,
-    getPeople,
-    handleSearchChange,
-    filteredPeople,
+    postPeople,
     deletePeople,
     getSinglePeople,
-    searchTerm,
-    postPeople,
-    getPeople,
-    
+    handleSearchChange,
+    filteredPeople,
+    singlepeopleId,
+    setSinglePeopleId,
 
-    countryData,
     // Company
     postCompany,
-      company,
-      getCompany,
-      handleSearchCompanyChange,
-      searchCompany,
-      filteredCompany,
-      deleteCompany,
-      postCompany
+    deleteCompany,
+    handleSearchCompanyChange,
+    filteredCompany,
+    singleCompany,
+    setSingleCompany,
 
-      
+    // Customer
+    getCustomer,
+    deleteCustomer,
+    storeSingleCustomerCompany,
+    storeSingleCustomerPeople,
+    customerData,
 
+    // Country
+    countryData,
+
+    // Lead
+    postLead,
+    leadData,
+    deleteLead,
   };
 
   return <Context.Provider value={contextValue}>{props.children}</Context.Provider>;

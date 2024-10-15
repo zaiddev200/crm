@@ -62,6 +62,17 @@ const getCompany = async (req, res ) => {
         
     }
   };
+  const getSingleCompany = async (req, res) => {
+    try {
+        const result = await company.findById(req.params.id)
+        if (!result) {
+            return res.status(404).json({ message: 'People not found' })
+        }
+        res.json(result)
+    } catch (err) {
+        res.status(500).json({ message: err.message })
+    }
+}
   
   const deleteCompany = async (req, res) => {
     try {
@@ -76,4 +87,4 @@ const getCompany = async (req, res ) => {
     }
   };
   
-  export { getCompany, createCompany, updateCompany, deleteCompany};
+  export { getCompany, createCompany, updateCompany, getSingleCompany, deleteCompany};

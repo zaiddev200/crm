@@ -4,8 +4,8 @@ const customerSchema = new mongoose.Schema({
   type: {
     type: String,
     required: true,
-    enum: ['people', 'company'],
-    default: 'people',
+    // enum: ['people', 'company'],
+    // default: 'people',
   },
   name: {
     type: String,
@@ -15,16 +15,16 @@ const customerSchema = new mongoose.Schema({
 
 country: {
     type: String,
-    required: true,
+    // required: true,
     trim: true,
 },
 phone: {
     type: Number,
-    required: true,
+    // required: true,
 },
 email: {
     type: String,
-    required: true,
+    // required: true,
     unique: true,
     trim: true,
     lowercase: true,
