@@ -16,6 +16,8 @@ const ContextProvider = (props) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchCompany, setSearchCompany] = useState("");
   const [leadData, setLeadData] = useState([]);
+  const [invoiceData, setInvoiceData] = useState([]);
+  const [singleInvoiceData, setSingleInvoiceData] = useState([]);
 
   // -------------------------
   //  People Logic
@@ -126,6 +128,7 @@ const ContextProvider = (props) => {
   // -------------------------
   //  Customer Logic
   // -------------------------
+  
   const getCustomer = async () => {
     try {
       const response = await axios.get("http://localhost:1337/api/customerform/customer");
@@ -259,6 +262,86 @@ const ContextProvider = (props) => {
     getLead();
   }, []);
 
+  // -------------------------
+  //  Invoices Logic
+  // -------------------------
+
+  const getInvoices = async () => {
+    try {
+      const response = await axios.get("http://localhost:1337/api/invoicesform/invoices");
+      console.log("Fetched Lead data:", response.data);
+      setInvoiceData(response.data.data);
+    } catch (error) {
+      console.error("Error fetching Lead data:", error);
+    }
+  };
+
+  const postInvoices = async (values) => {
+    try {
+      const response = await axios.post("http://localhost:1337/api/invoicesform/invoices", values);
+      console.log("Invoice added successfully", response.data);
+      alert("Invoice added successfully!");
+      getInvoices()
+    } catch (error) {
+      console.error("Error posting invoice data:", error);
+      alert("Failed to add invoice.");
+    }
+  };
+    const deleteInvoices = async (id) => {
+      try {
+        console.log(id);
+        await axios.delete(`http://localhost:1337/api/invoicesform/invoices/${id}`);
+        setInvoiceData((prev) => prev.filter((invoice) => invoice._id !== id));
+        
+        console.log(`Invoice with ID ${id} deleted successfully`);
+      } catch (error) {
+        console.error(`Error deleting Invoice with ID ${id}:`, error);
+      }
+    };
+    const updateInvoice = async (id, updatedData) => {
+      try {
+        console.log(`Updating invoice with ID: ${id}`);
+        
+        const response = await axios.put(
+          `http://localhost:1337/api/invoicesform/invoices/${id}`, 
+          updatedData
+        );
+    
+        // Update the state with the new invoice data
+        setInvoiceData((prev) =>
+          prev.map((invoice) =>
+            invoice._id === id ? { ...invoice, ...response.data } : invoice
+          )
+        );
+    
+        console.log(`Invoice with ID ${id} updated successfully`);
+      } catch (error) {
+        console.error(`Error updating Invoice with ID ${id}:`, error);
+      }
+    };
+    
+
+  const getSingleInvoice = async (id) => {
+    console.log(id);
+      
+    try {
+      const { data } = await axios.get(
+        `http://localhost:1337/api/invoicesform/invoices/${id}`
+      );
+      setSingleInvoiceData(data)
+      console.log("Invoice fetch successfully", data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getInvoices();
+  }, []);
+  
+  console.log( "singleInvoiceData", singleInvoiceData);
+
+
 
   // -------------------------
   //  Context Value
@@ -296,6 +379,15 @@ const ContextProvider = (props) => {
     postLead,
     leadData,
     deleteLead,
+
+
+    // Incoices
+    postInvoices,
+    invoiceData,
+    deleteInvoices,
+    getSingleInvoice,
+    updateInvoice,
+    singleInvoiceData
   };
 
   return <Context.Provider value={contextValue}>{props.children}</Context.Provider>;

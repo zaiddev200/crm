@@ -8,6 +8,9 @@ import { Customers } from './components/Customers'
 import { Peoples } from './components/People'
 import { Company } from './components/Company'
 import { Leads } from './components/Leads'
+import { Invoices } from './components/Invoices'
+import { InvoicesSideBar } from './components/InvoicesSideBar'
+import { RecordPayment } from './components/PaymentRecord'
 
 const App = () => (
   <div>
@@ -19,6 +22,9 @@ const App = () => (
         <Route path='/peoples' element={<Peoples />} />
         <Route path='/companies' element={<Company />} />
         <Route path='/leads' element={<Leads />} />
+        <Route path='/invoices' element={<Invoices />} />
+        <Route path='/invoices/create' element={<InvoicesSideBar />} />
+        <Route path='/invoices/record-payment' element={<RecordPayment />} />
 
       </Route>
 

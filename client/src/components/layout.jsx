@@ -90,6 +90,17 @@ export function Layout({ children }) {
                 <LineChart className="h-4 w-4" />
                 Leads
               </NavLink>
+              <NavLink
+                to="/invoices"
+                className={({ isActive }) =>
+                  isActive
+                    ? "flex items-center gap-3 pl-3 py-2 rounded-tl-lg rounded-bl-lg text-secondary1 bg-gradient-to-r from-secondary2 via-secondary2 to-black1"
+                    : "flex items-center gap-3 pl-3 py-2 rounded-tl-lg rounded-bl-lg text-white hover:bg-[#9393934a]"
+                }
+              >
+                <MdOutlineHeadset className="h-4 w-4" />
+                Invoices
+              </NavLink>
             </nav>
           </div>
         </div>
